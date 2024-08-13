@@ -10,6 +10,9 @@ const Form = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    setErrors(null);
+
     const data: User = { name, email, agree };
     const validateErrors = validate(data);
 
@@ -17,6 +20,10 @@ const Form = () => {
       setErrors(validateErrors);
       return;
     }
+
+    setName("");
+    setEmail("");
+    setAgree(false);
   };
 
   return (
@@ -32,6 +39,9 @@ const Form = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+        {errors?.name && (
+          <small className="text-xs text-red-500 mt-1">{errors?.name}</small>
+        )}
       </div>
       <div className="flex flex-col">
         <label className="text-sm" htmlFor="email">
@@ -44,6 +54,9 @@ const Form = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+        {errors?.email && (
+          <small className="text-xs text-red-500 mt-1">{errors?.email}</small>
+        )}
       </div>
       <div className="flex flex-col">
         <a href="#" className="text-xs underline mb-2">
@@ -59,6 +72,9 @@ const Form = () => {
             Concordo com os termos
           </label>
         </div>
+        {errors?.agree && (
+          <small className="text-xs text-red-500 mt-1">{errors?.agree}</small>
+        )}
       </div>
       <button
         type="submit"
